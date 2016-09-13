@@ -1,9 +1,7 @@
 FROM mdillon/postgis:9.5
 
 RUN apt-get update \
-  && apt-get install -y build-essential
-
-RUN apt-get install -y wget
+  && apt-get install -y build-essential wget postgresql-server-dev-9.5 libxml2-dev libproj-dev libgdal-dev
 
 RUN cd tmp \
   && wget http://download.osgeo.org/geos/geos-3.5.0.tar.bz2 \
@@ -13,4 +11,13 @@ RUN cd tmp \
   && make \
   && make install
 
-RUN apt-get purge -y --auto-remove build-essential
+RUN cd tmp \
+  && wget http://download.osgeo.org/postgis/source/postgis-2.2.2.tar.gz \
+  && tar xfz postgis-2.2.2.tar.gz \
+  && cd postgis-2.2.2 \
+  && ./configure \
+  && make \
+  && make install
+
+RUN rm -rf /tmp/postgis-* /tmp/geos-*
+RUN apt-get purge -y --auto-remove build-essential wget postgresql-server-dev-9.5 libxml2-dev libproj-dev libgdal-dev
