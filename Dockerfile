@@ -1,7 +1,7 @@
 FROM mdillon/postgis:9.5
 
 RUN apt-get update \
-  && apt-get install -y build-essential wget postgresql-server-dev-9.5 libxml2-dev libproj-dev libgdal-dev
+  && apt-get install -y build-essential wget postgresql-server-dev-9.5 libxml2-dev libproj-dev libgdal-dev libjson-c-dev libpcre3-dev
 
 RUN cd tmp \
   && wget http://download.osgeo.org/geos/geos-3.5.0.tar.bz2 \
@@ -20,4 +20,4 @@ RUN cd tmp \
   && make install
 
 RUN rm -rf /tmp/postgis-* /tmp/geos-*
-RUN apt-get purge -y --auto-remove build-essential wget postgresql-server-dev-9.5 libxml2-dev libproj-dev libgdal-dev
+RUN apt-get purge -y --auto-remove build-essential wget postgresql-server-dev-9.5 libxml2-dev libproj-dev libgdal-dev libjson-c-dev libpcre3-dev
